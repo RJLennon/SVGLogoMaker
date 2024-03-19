@@ -34,7 +34,7 @@ const questions = [
 
 //function to generate SVG content
 
-const readmeContent = ({text, textcolor, shape, shapecolor}) => {
+const svgContent = ({text, textcolor, shape, shapecolor}) => {
     return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
         <rect width="100" height="100" fill="${shapecolor}"/>
