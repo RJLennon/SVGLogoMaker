@@ -48,7 +48,7 @@ function renderShape(shape, shapecolor) {
 //function to generate SVG content
 const svgContent = ({text, textcolor, shape, shapecolor}) => {
     return `<svg version="1.1"
-    width="300" height="200"
+    width="500" height="500"
     xmlns="http://www.w3.org/2000/svg">
 
  ${renderShape(shape, shapecolor)}
