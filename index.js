@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const {Circle, Square, Triangle} = require('./lib/shapes');
 
 //array of questions for user input
 const questions = [
@@ -32,12 +33,51 @@ const questions = [
       },
 ];
 
-//function to generate SVG content
+//conditional statement to display the shape
+function renderShape(shape, shapecolor) {
+    if (shape === "Circle") {
+        return new Circle(shapecolor).render();
+    } else if (shape === "Square") {
+        return new Square(shapecolor).render();
+    } else if (shape === "Triangle") {
+        return new Triangle(shapecolor).render();
+    }
+}
 
+
+//function to generate SVG content
 const svgContent = ({text, textcolor, shape, shapecolor}) => {
-    return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-    <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" fill="${shapecolor}"/>
-        <text x="50" y="50" font-size="20" text-anchor="middle" fill="${textcolor}">${text}</text>
-    </svg>`;
+    return `<svg version="1.1"
+    width="300" height="200"
+    xmlns="http://www.w3.org/2000/svg">
+
+ ${renderShape(shape, shapecolor)}
+
+ <text x="150" y="125" font-size="60" text-anchor="middle" fill="${textcolor}">${text}</text>
+
+</svg>`;
 };
+
+//function to write SVG content to file
+function writeToFile(fileName, data) {
+  //Write data to the file
+  fs.writeFile(fileName, data, (err) => {
+    if (err) {
+      console.error('An error occured',err);
+      return;
+    }
+    console.log('file created!');
+  });
+};
+
+//function to initialize app
+function init() {
+    inquirer.prompt(questions)
+    .then((answers) => {
+        const svgData = svgContent(answers);
+        writeToFile('logo.svg', svgData);
+    });
+};
+
+//function call to initialize app
+init();
